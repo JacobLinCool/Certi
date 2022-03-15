@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
 
-const regexs = [/https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}/];
-
 const checkers: {
     type: string;
     regex: RegExp;
