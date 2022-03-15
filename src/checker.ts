@@ -8,11 +8,28 @@ const checkers: {
     check: (url: string) => boolean | Promise<boolean>;
 }[] = [
     {
-        type: "Coursera",
+        type: "Coursera Course Certificate",
         regex: /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}/,
         check: async (url: string) => {
             const code = url.match(
                 /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/([\d\w]{12})/,
+            )?.[1];
+            if (!code) {
+                return false;
+            }
+            const res = await fetch(
+                `https://www.coursera.org/api/certificate.v1/?q=byVerifyCode&verifyCode=${code}&fields=verifyCode`,
+            );
+            const json = await res.json();
+            return json.elements.length > 0;
+        },
+    },
+    {
+        type: "Coursera Specialization Certificate",
+        regex: /https:\/\/www.coursera.org\/account\/accomplishments\/specialization\/certificate\/[\d\w]{12}/,
+        check: async (url: string) => {
+            const code = url.match(
+                /https:\/\/www.coursera.org\/account\/accomplishments\/specialization\/certificate\/([\d\w]{12})/,
             )?.[1];
             if (!code) {
                 return false;
