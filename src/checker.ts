@@ -2,24 +2,44 @@ import fetch from "node-fetch";
 
 const regexs = [/https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}/];
 
+const checkers: {
+    type: string;
+    regex: RegExp;
+    check: (url: string) => boolean | Promise<boolean>;
+}[] = [
+    {
+        type: "Coursera",
+        regex: /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}/,
+        check: async (url: string) => {
+            const code = url.match(
+                /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/([\d\w]{12})/,
+            )?.[1];
+            if (!code) {
+                return false;
+            }
+            const res = await fetch(
+                `https://www.coursera.org/api/certificate.v1/?q=byVerifyCode&verifyCode=${code}&fields=verifyCode`,
+            );
+            const json = await res.json();
+            return json.elements.length > 0;
+        },
+    },
+];
+
 export default async function check(url: string): Promise<boolean> {
     url = normalize_url(url);
-    console.log(`Checking "${url}"...`);
 
-    if (!regexs.some((regex) => regex.test(url))) {
-        return false;
+    for (const checker of checkers) {
+        if (checker.regex.test(url)) {
+            console.log(`Checking "${url}" with type: ${checker.type}`);
+            const ok = await checker.check(url);
+            console.log(`"${url}" is ${ok ? "valid" : "invalid"}`);
+            return ok;
+        }
     }
 
-    console.log(`Fetching "${url}"...`);
-
-    const res = await fetch(url);
-    if (res.status !== 200) {
-        return false;
-    }
-
-    console.log(`"${url}" is valid!`);
-
-    return true;
+    console.log(`"${url}" is invalid, no type matched`);
+    return false;
 }
 
 function normalize_url(url: string): string {
