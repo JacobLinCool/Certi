@@ -1,12 +1,12 @@
 # Certi
 
-An URL shortener for certifications.
+An URL shortener for Certificates.
 
-The url of Coursera certification is too long, and put it on resume is breaking the layout, so I created this url shortener.
+The url of Coursera certificate is too long, and put it on resume is breaking the layout, so I created this url shortener.
 
 <div style="text-align: center;">
     <a href="#usage"> Usage </a> |
-    <a href="#supported-certifications"> Supported Certifications </a> |
+    <a href="#supported-certificates"> Supported Certificates </a> |
     <a href="#endpoints"> Endpoints </a>
 </div>
 
@@ -77,13 +77,14 @@ failed:
 }
 ```
 
-## Supported Certifications
+## Supported Certificates
 
-Now it only supports [Coursera](https://www.coursera.org/) certifications:
+Now it only supports [Coursera](https://www.coursera.org/) certificates:
 
 - `https://www.coursera.org/account/accomplishments/certificate/ABCDEFGHIJKL`
+- `https://www.coursera.org/account/accomplishments/specialization/certificate/ABCDEFGHIJKL`
 
-Feel free to open an issue or pull request if you want to support other certification.
+Feel free to open an issue or pull request if you want to support other certificates.
 
 ## Endpoints
 
