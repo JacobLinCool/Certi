@@ -1,0 +1,26 @@
+{
+    "private": true,
+    "name": "certi-deta",
+    "version": "0.1.0",
+    "description": "An URL shortener for certificates.",
+    "scripts": {
+        "prepare": "pnpm build",
+        "build": "tsup",
+        "preview": "pnpm run -s build && node -e \"require('.').listen(3000, () => console.log('http://localhost:3000/'))\"",
+        "deploy": "pnpm run -s build && deta deploy"
+    },
+    "author": "JacobLinCool <jacoblincool@gmail.com> (https://github.com/JacobLinCool)",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.21",
+        "tsup": "^5.12.1",
+        "typescript": "^4.6.2"
+    },
+    "dependencies": {
+        "deta": "^1.1.0",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "certi": "^0.1.3"
+    }
+}

@@ -1,1 +1,0 @@
-{"id":"6e2404c1-f1fb-4b35-b9f9-520aa6a7ca89","space":11322,"runtime":"nodejs14.x","name":"Certi","path":"5pwzfw","project":"c0bze5m3","account":"144798365827","region":"ap-southeast-1","deps":["express@^4.17.3","deta@^1.1.0","node-fetch@2.6.7","dotenv@^16.0.0"],"envs":null,"public":true,"log_level":"debug","cron":""}

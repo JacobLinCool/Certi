@@ -42,18 +42,23 @@ const checkers: {
     },
 ];
 
-export default async function check(url: string): Promise<boolean> {
+export async function check(url: string, verbose = true): Promise<boolean> {
     url = normalize_url(url);
 
+    verbose && console.time(`Check ${url}`);
     for (const checker of checkers) {
         if (checker.regex.test(url)) {
-            console.log(`Checking "${url}" with type: ${checker.type}`);
+            verbose && console.log(`Checking "${url}" with type: ${checker.type}`);
             const ok = await checker.check(url);
-            console.log(`"${url}" is ${ok ? "valid" : "invalid"}`);
+            verbose && console.log(`"${url}" is ${ok ? "valid" : "invalid"}`);
+            verbose && console.timeEnd(`Check ${url}`);
             return ok;
         }
     }
 
-    console.log(`"${url}" is invalid, no type matched`);
+    verbose && console.log(`"${url}" is invalid, no type matched`);
+    verbose && console.timeEnd(`Check ${url}`);
     return false;
 }
+
+export default check;

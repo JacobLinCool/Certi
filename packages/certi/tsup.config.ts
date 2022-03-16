@@ -2,11 +2,11 @@ import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
     entry: ["src/index.ts"],
-    outDir: "_server",
+    outDir: "lib",
     target: "node14",
-    format: ["cjs"],
+    format: ["cjs", "esm"],
     clean: true,
     splitting: false,
     minify: !options.watch,
-    // dts: options.watch ? false : { resolve: true },
+    dts: options.watch ? false : { resolve: true },
 }));

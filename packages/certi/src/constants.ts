@@ -1,4 +1,4 @@
-export const BASE = "https://certi.jacoblin.cool/";
+export const BASE = "http://localhost/";
 export const HASH_SALT = "certi";
 export const RANDOM_DICT = "0123456789abcdefghijklmnopqrstuvwxyz";
 

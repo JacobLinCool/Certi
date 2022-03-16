@@ -15,7 +15,9 @@ export function hash(str: string, salt = HASH_SALT): string {
         .update(salt + str)
         .digest("hex");
 
-    return BigInt("0x" + hex).toString(36);
+    const base36_even = [...BigInt("0x" + hex).toString(36)].filter((_, i) => i % 2 === 0);
+
+    return base36_even.slice(6, 12).join("");
 }
 
 export function normalize_url(url: string): string {
