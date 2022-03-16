@@ -4,11 +4,11 @@ An URL shortener for Certificates.
 
 The url of Coursera certificate is too long, and put it on resume is breaking the layout, so I created this url shortener.
 
-<div style="text-align: center;">
+<p align="center">
     <a href="#usage"> Usage </a> |
     <a href="#supported-certificates"> Supported Certificates </a> |
     <a href="#endpoints"> Endpoints </a>
-</div>
+</p>
 
 ## Usage
 
