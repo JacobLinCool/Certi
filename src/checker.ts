@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { normalize_url } from "./utils";
 
 const checkers: {
     type: string;
@@ -55,12 +56,4 @@ export default async function check(url: string): Promise<boolean> {
 
     console.log(`"${url}" is invalid, no type matched`);
     return false;
-}
-
-function normalize_url(url: string): string {
-    url = url.replace(/^http:/, "https:");
-    if (!url.startsWith("http")) {
-        url = "https://" + url;
-    }
-    return url;
 }
