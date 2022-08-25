@@ -1,4 +1,3 @@
-import crypto from "node:crypto";
 import { HASH_SALT, RANDOM_DICT } from "./constants";
 
 export function random_string(len: number, dict = RANDOM_DICT): string {
@@ -9,11 +8,23 @@ export function random_string(len: number, dict = RANDOM_DICT): string {
     return str;
 }
 
-export function hash(str: string, salt = HASH_SALT): string {
-    const hex = crypto
-        .createHash("sha256")
-        .update(salt + str)
-        .digest("hex");
+export async function hash(str: string, salt = HASH_SALT): Promise<string> {
+    let hex: string;
+
+    if (globalThis.crypto?.subtle !== undefined) {
+        hex = [
+            ...new Uint8Array(
+                await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str + salt)),
+            ),
+        ]
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join("");
+    } else {
+        hex = (await import("node:crypto"))
+            .createHash("sha256")
+            .update(str + salt)
+            .digest("hex");
+    }
 
     const base36_even = [...BigInt("0x" + hex).toString(36)].filter((_, i) => i % 2 === 0);
 
