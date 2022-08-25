@@ -18,4 +18,10 @@ export interface Store {
     delete(key: string): Promise<void> | void;
 }
 
-export type Checker = (url: string) => Promise<boolean> | boolean;
+export type CheckerEntry = {
+    type: string;
+    regex: RegExp;
+    check: (url: string) => boolean | Promise<boolean>;
+};
+
+export type Checker = (url: string, checkers: CheckerEntry[]) => Promise<boolean> | boolean;

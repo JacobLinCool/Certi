@@ -1,14 +1,11 @@
 import fetch from "node-fetch";
+import { CheckerEntry } from "./types";
 import { normalize_url } from "./utils";
 
-const checkers: {
-    type: string;
-    regex: RegExp;
-    check: (url: string) => boolean | Promise<boolean>;
-}[] = [
+export const certi_checkers: CheckerEntry[] = [
     {
         type: "Coursera Course Certificate",
-        regex: /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}/,
+        regex: /^https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/[\d\w]{12}$/,
         check: async (url: string) => {
             const code = url.match(
                 /https:\/\/www.coursera.org\/account\/accomplishments\/certificate\/([\d\w]{12})/,
@@ -25,7 +22,7 @@ const checkers: {
     },
     {
         type: "Coursera Specialization Certificate",
-        regex: /https:\/\/www.coursera.org\/account\/accomplishments\/specialization\/certificate\/[\d\w]{12}/,
+        regex: /^https:\/\/www.coursera.org\/account\/accomplishments\/specialization\/certificate\/[\d\w]{12}$/,
         check: async (url: string) => {
             const code = url.match(
                 /https:\/\/www.coursera.org\/account\/accomplishments\/specialization\/certificate\/([\d\w]{12})/,
@@ -42,7 +39,7 @@ const checkers: {
     },
 ];
 
-export async function check(url: string): Promise<boolean> {
+export async function check(url: string, checkers = certi_checkers): Promise<boolean> {
     url = normalize_url(url);
     const verbose = process.env.VERBOSE;
 
