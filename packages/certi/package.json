@@ -1,6 +1,6 @@
 {
     "name": "certi",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "An URL shortener for certificates.",
     "author": "JacobLinCool <jacoblincool@gmail.com> (https://github.com/JacobLinCool)",
     "license": "MIT",
