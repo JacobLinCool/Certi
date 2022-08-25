@@ -1,0 +1,19 @@
+name = "certi"
+workers_dev = true
+node_compat = true
+compatibility_date = "2022-03-17"
+kv_namespaces = [ 
+  { binding = "kv", id = "0edd0dda62174e978848402f17549e1c", preview_id = "319b6aa13ab247719c5310892ca8c9b1" }
+]
+
+main = "dist/index.js"
+
+[[rules]]
+type = "ESModule"
+globs = ["**/*.js"]
+
+[build]
+command = "pnpm run build"
+
+[vars]
+VERBOSE = "true"
