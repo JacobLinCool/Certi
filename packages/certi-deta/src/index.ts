@@ -6,12 +6,17 @@ const app = express();
 const certi = new Certi({ base: "https://certi.jacoblin.cool/", store });
 
 app.get("/", (req, res) => {
-    res.json({
-        create: "/create?cert=<certificate_url>&prefix=<prefix>",
-        delete: "/delete?key=<key>&del_code=<delete_code>",
-        notice: "The length of the prefix must be between 0 and 16 characters.",
-        see: "https://github.com/JacobLinCool/Certi",
-    });
+    const json = JSON.stringify(
+        {
+            create: "/create?cert=<certificate_url>&prefix=<prefix>",
+            delete: "/delete?key=<key>&del_code=<delete_code>",
+            notice: "The length of the prefix must be between 0 and 16 characters.",
+            see: "https://github.com/JacobLinCool/Certi",
+        },
+        null,
+        4,
+    );
+    res.send(json);
 });
 
 app.get("/create", async (req, res) => {
