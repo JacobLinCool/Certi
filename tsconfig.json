@@ -1,12 +1,16 @@
 {
-    "include": ["src/**/*.ts"],
+    "exclude": [
+        "**/dist/**",
+        "**/lib/**",
+        "**/node_modules/**",
+        "**/src/_tests/**",
+        "**/tsup.config.ts"
+    ],
     "compilerOptions": {
-        "target": "es2020",
-        "lib": ["es2020"],
+        "target": "ESNext",
+        "lib": ["ESNext", "DOM"],
         "module": "commonjs",
         "moduleResolution": "node",
-        "rootDir": "./src",
-        "outDir": "./_server",
         "declaration": true,
         "resolveJsonModule": true,
         "noEmitOnError": true,

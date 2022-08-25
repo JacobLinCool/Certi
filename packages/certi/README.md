@@ -2,7 +2,7 @@
 
 An URL shortener for Certificates.
 
-The url of Coursera certificate is too long, and put it on resume is breaking the layout, so I created this url shortener.
+The URL of the Coursera certificate is too long, and putting it on the resume is breaking the layout, so I created this URL shortener.
 
 <p align="center">
     <a href="#usage"> Usage </a> |
