@@ -1,20 +1,25 @@
-import { Item } from "./types";
+import { Item, Store } from "./types";
 
-const _database: Record<string, Item> = {};
+/**
+ * In-memory key-value store.
+ */
+export class MemoryStore implements Store {
+    private database: Record<string, Item> = {};
 
-export const db = {
     async insert(key: string, item: Item) {
-        if (_database[key]) {
+        if (this.database[key]) {
             throw new Error("key exists");
         }
-        _database[key] = item;
-    },
-    async get(key: string) {
-        return _database[key];
-    },
-    async delete(key: string) {
-        delete _database[key];
-    },
-};
+        this.database[key] = item;
+    }
 
-export default db;
+    async get(key: string) {
+        return this.database[key];
+    }
+
+    async delete(key: string) {
+        delete this.database[key];
+    }
+}
+
+export const db = new MemoryStore();

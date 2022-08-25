@@ -42,8 +42,9 @@ const checkers: {
     },
 ];
 
-export async function check(url: string, verbose = true): Promise<boolean> {
+export async function check(url: string): Promise<boolean> {
     url = normalize_url(url);
+    const verbose = process.env.VERBOSE;
 
     verbose && console.time(`Check ${url}`);
     for (const checker of checkers) {

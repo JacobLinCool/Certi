@@ -1,7 +1,7 @@
 import { check } from "./check";
 import { BASE, ERROR } from "./constants";
 import { db } from "./db";
-import { CertiOptions, Store } from "./types";
+import { CertiOptions, Checker, Store } from "./types";
 import { hash, random_string } from "./utils";
 
 /**
@@ -10,10 +10,27 @@ import { hash, random_string } from "./utils";
 export class Certi {
     public base: string;
     public store: Store;
+    public checker: Checker;
 
-    constructor({ base = BASE, store = db }: CertiOptions = {}) {
+    constructor({ base = BASE, store = db, checker = check }: CertiOptions = {}) {
         this.base = base;
         this.store = store;
+        this.checker = checker;
+    }
+
+    public set_base(base: string): this {
+        this.base = base;
+        return this;
+    }
+
+    public set_database(db: Store): this {
+        this.store = db;
+        return this;
+    }
+
+    public set_checker(checker: Checker): this {
+        this.checker = checker;
+        return this;
     }
 
     public async create({ cert, prefix = "" }: { cert: string; prefix?: string }) {
@@ -22,7 +39,7 @@ export class Certi {
         }
         prefix = (prefix || "").trim();
         const del_code = random_string(6);
-        const key = hash(cert);
+        const key = await hash(cert);
         const item = { prefix, key, cert, del_code, created: Date.now() };
         const url = `${this.base}${prefix}${key}`;
 
@@ -56,6 +73,8 @@ export class Certi {
 }
 
 export default Certi;
-export * from "./types";
+export * from "./db";
+export * from "./check";
 export * from "./utils";
+export * from "./types";
 export * from "./constants";
