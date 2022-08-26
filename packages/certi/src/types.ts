@@ -1,7 +1,9 @@
 export interface CertiOptions {
     base?: string;
     store?: Store;
+    /** Raw URL validator */
     checker?: Checker;
+    /** Short URL key generator */
     keygen?: (url: string) => Promise<string>;
 }
 
@@ -25,4 +27,11 @@ export type CheckerEntry = {
     check: (url: string) => boolean | Promise<boolean>;
 };
 
-export type Checker = (url: string, checkers?: CheckerEntry[]) => Promise<boolean> | boolean;
+export type Checker = (url: string, rules?: CheckerEntry[]) => Promise<boolean> | boolean;
+
+export interface Result {
+    success: boolean;
+    error?: string;
+    item?: Item;
+    url?: string;
+}

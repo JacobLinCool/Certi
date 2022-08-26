@@ -1,7 +1,7 @@
 import { check } from "./check";
 import { BASE, ERROR } from "./constants";
 import { db } from "./db";
-import { CertiOptions, Checker, Store } from "./types";
+import { CertiOptions, Checker, Result, Store } from "./types";
 import { random_string, sha256 } from "./utils";
 
 /**
@@ -13,6 +13,9 @@ export class Certi {
     private checker: Checker;
     private keygen: (url: string) => Promise<string>;
 
+    /**
+     * @param options
+     */
     constructor({ base = BASE, store = db, checker = check, keygen = sha256 }: CertiOptions = {}) {
         this.base = base;
         this.store = store;
@@ -40,7 +43,11 @@ export class Certi {
         return this;
     }
 
-    public async create({ cert, prefix = "" }: { cert: string; prefix?: string }) {
+    /**
+     * Create a new short URL
+     * @param options
+     */
+    public async create({ cert, prefix = "" }: { cert: string; prefix?: string }): Promise<Result> {
         if ((await this.checker(cert)) === false) {
             return { success: false, error: ERROR.INVALID_CERT_URL };
         }
@@ -60,7 +67,11 @@ export class Certi {
         return { success: true, item, url };
     }
 
-    public async delete({ key, del_code }: { key: string; del_code: string }) {
+    /**
+     * Delete a short URL
+     * @param options
+     */
+    public async delete({ key, del_code }: { key: string; del_code: string }): Promise<Result> {
         const item = await this.store.get(key);
 
         if (!item) {
@@ -75,6 +86,10 @@ export class Certi {
         return { success: true, item };
     }
 
+    /**
+     * Get a short URL
+     * @param key The key of the short URL
+     */
     public async get(key: string) {
         return await this.store.get(key);
     }
