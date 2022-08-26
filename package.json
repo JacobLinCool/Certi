@@ -6,7 +6,8 @@
         "test": "pnpm -r --filter=./packages/* run test",
         "format": "prettier --write '**/*.{js,json,md,yml,yaml,css,html,ts}' --ignore-path .gitignore",
         "build": "pnpm -r --filter=./packages/* run build",
-        "docs": "pnpm -r --filter=./packages/* run docs",
+        "docs": "pnpm -r --filter=./packages/* run docs && esno scripts/docs.ts",
+        "publish": "pnpm -r --filter=./packages/* publish",
         "preview:deta": "pnpm -r --filter=certi-deta run preview",
         "deploy:deta": "pnpm -r --filter=certi-deta run deploy",
         "lint": "eslint --env-info --fix ."
@@ -15,11 +16,16 @@
     "license": "MIT",
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+        "@types/node-fetch": "^2.6.2",
+        "@types/serve-handler": "^6.1.1",
         "@typescript-eslint/eslint-plugin": "^5.35.1",
         "@typescript-eslint/parser": "^5.35.1",
         "eslint": "^8.22.0",
         "eslint-config-prettier": "^8.5.0",
+        "esno": "^0.16.3",
+        "node-fetch": "^2.6.7",
         "prettier": "^2.7.1",
+        "serve-handler": "^6.1.3",
         "typescript": "^4.7.4"
     }
 }

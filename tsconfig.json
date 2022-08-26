@@ -4,7 +4,8 @@
         "**/lib/**",
         "**/node_modules/**",
         "**/src/_tests/**",
-        "**/tsup.config.ts"
+        "**/tsup.config.ts",
+        "packages/certi-cloudflare"
     ],
     "compilerOptions": {
         "target": "ESNext",
