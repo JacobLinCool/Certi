@@ -2,6 +2,7 @@ export interface CertiOptions {
     base?: string;
     store?: Store;
     checker?: Checker;
+    keygen?: (url: string) => Promise<string>;
 }
 
 export interface Item {
@@ -24,4 +25,4 @@ export type CheckerEntry = {
     check: (url: string) => boolean | Promise<boolean>;
 };
 
-export type Checker = (url: string, checkers: CheckerEntry[]) => Promise<boolean> | boolean;
+export type Checker = (url: string, checkers?: CheckerEntry[]) => Promise<boolean> | boolean;

@@ -8,7 +8,7 @@ export function random_string(len: number, dict = RANDOM_DICT): string {
     return str;
 }
 
-export async function hash(str: string, salt = HASH_SALT): Promise<string> {
+export async function sha256(str: string, salt = HASH_SALT): Promise<string> {
     let hex: string;
 
     if (globalThis.crypto?.subtle !== undefined) {

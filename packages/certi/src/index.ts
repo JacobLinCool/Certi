@@ -2,7 +2,7 @@ import { check } from "./check";
 import { BASE, ERROR } from "./constants";
 import { db } from "./db";
 import { CertiOptions, Checker, Store } from "./types";
-import { hash, random_string } from "./utils";
+import { random_string, sha256 } from "./utils";
 
 /**
  * An URL Shortener
@@ -10,12 +10,14 @@ import { hash, random_string } from "./utils";
 export class Certi {
     public base: string;
     public store: Store;
-    public checker: Checker;
+    private checker: Checker;
+    private keygen: (url: string) => Promise<string>;
 
-    constructor({ base = BASE, store = db, checker = check }: CertiOptions = {}) {
+    constructor({ base = BASE, store = db, checker = check, keygen = sha256 }: CertiOptions = {}) {
         this.base = base;
         this.store = store;
         this.checker = checker;
+        this.keygen = keygen;
     }
 
     public set_base(base: string): this {
@@ -33,13 +35,19 @@ export class Certi {
         return this;
     }
 
+    public set_keygen(keygen: (url: string) => Promise<string>): this {
+        this.keygen = keygen;
+        return this;
+    }
+
     public async create({ cert, prefix = "" }: { cert: string; prefix?: string }) {
-        if ((await check(cert)) === false) {
+        if ((await this.checker(cert)) === false) {
             return { success: false, error: ERROR.INVALID_CERT_URL };
         }
-        prefix = (prefix || "").trim();
+
+        prefix = prefix.trim();
         const del_code = random_string(6);
-        const key = await hash(cert);
+        const key = await this.keygen(cert);
         const item = { prefix, key, cert, del_code, created: Date.now() };
         const url = `${this.base}${prefix}${key}`;
 
