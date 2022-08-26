@@ -2,20 +2,14 @@
 
 An URL shortener for Certificates.
 
-The URL of the Coursera certificate is too long, and putting it on the resume is breaking the layout, so I created this URL shortener.
-
-<p align="center">
-    <a href="#usage"> Usage </a> |
-    <a href="#supported-certificates"> Supported Certificates </a> |
-    <a href="#endpoints"> Endpoints </a>
-</p>
+Running on Deta Macro, using Deta Base as the store.
 
 ## Usage
 
 ### Create a short URL
 
 ```sh
-curl https://certi.jacoblin.cool/create?cert=<certificate_url>&prefix=<prefix>
+curl https://cert.deta.dev/create?cert=<certificate_url>&prefix=<prefix>
 ```
 
 `cert`: The URL of the certificate.
@@ -33,7 +27,7 @@ success:
     "del_code": "lpq9h2",
     "created": 1647366594944
   },
-  "url": "https://certi.jacoblin.cool/jacob-861523"
+  "url": "https://cert.deta.dev/jacob-861523"
 }
 ```
 
@@ -43,7 +37,7 @@ failed:
 {
   "success": false,
   "error": "Already Exists (or other error message)",
-  "url": "https://certi.jacoblin.cool/jacob-861523"
+  "url": "https://cert.deta.dev/jacob-861523"
 }
 ```
 
@@ -77,18 +71,4 @@ failed:
 }
 ```
 
-## Supported Certificates
-
-Now it only supports [Coursera](https://www.coursera.org/) certificates:
-
-- `https://www.coursera.org/account/accomplishments/certificate/ABCDEFGHIJKL`
-- `https://www.coursera.org/account/accomplishments/specialization/certificate/ABCDEFGHIJKL`
-
-Feel free to open an issue or pull request if you want to support other certificates.
-
-## Endpoints
-
-- `cert.deta.dev`
-- `certi.jacoblin.cool` (alias of `cert.deta.dev`)
-
-You can also host this service on your own domain.
+See Certi for more details: <https://github.com/JacobLinCool/Certi>

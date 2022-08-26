@@ -1,94 +1,31 @@
 # Certi
 
-An URL shortener for Certificates.
+An configurable URL shortener for Certificates (and other things).
 
-The URL of the Coursera certificate is too long, and putting it on the resume is breaking the layout, so I created this URL shortener.
+This is the core library part of Certi. If you just want to run a server, try [certi-cli](https://www.npmjs.com/package/certi-cli).
 
-<p align="center">
-    <a href="#usage"> Usage </a> |
-    <a href="#supported-certificates"> Supported Certificates </a> |
-    <a href="#endpoints"> Endpoints </a>
-</p>
+You can also try the demo on [`cert.deta.dev`](https://cert.deta.dev/) or [`certi.jacob.workers.dev`](https://certi.jacob.workers.dev/).
 
 ## Usage
 
-### Create a short URL
+Simply start with the default configs:
 
-```sh
-curl https://certi.jacoblin.cool/create?cert=<certificate_url>&prefix=<prefix>
-```
+```ts
+import { Certi } from "certi";
 
-`cert`: The URL of the certificate.
-`prefix`: The prefix of the short URL. (optional, length: 0-16)
+main();
 
-success:
+async function main() {
+    // create Certi instance in memory-store mode
+    const certi = new Certi();
 
-```json
-{
-  "success": true,
-  "item": {
-    "prefix": "jacob-",
-    "key": "861523",
-    "cert": "https://www.coursera.org/account/accomplishments/certificate/RZU3FVL3SWJ4",
-    "del_code": "lpq9h2",
-    "created": 1647366594944
-  },
-  "url": "https://certi.jacoblin.cool/jacob-861523"
+    // auto-check with Coursera for the existence of the certificate
+    const result = await certi.create({ cert: "https://www.coursera.org/account/accomplishments/certificate/RZU3FVL3SWJ4" });
+
+    if (result.success) {
+        console.log(result.url);
+    } else {
+        console.error(result.error);
+    }
 }
 ```
-
-failed:
-
-```json
-{
-  "success": false,
-  "error": "Already Exists (or other error message)",
-  "url": "https://certi.jacoblin.cool/jacob-861523"
-}
-```
-
-### Delete a short URL
-
-```sh
-curl /delete?key=<key>&del_code=<delete_code>
-```
-
-success:
-
-```json
-{
-  "success": true,
-  "item": {
-    "cert": "https://www.coursera.org/account/accomplishments/certificate/RZU3FVL3SWJ4",
-    "created": 1647366594944,
-    "del_code": "lpq9h2",
-    "key": "jacob-861523",
-    "prefix": "jacob-"
-  }
-}
-```
-
-failed:
-
-```json
-{
-  "success": false,
-  "error": "Error Message"
-}
-```
-
-## Supported Certificates
-
-Now it only supports [Coursera](https://www.coursera.org/) certificates:
-
-- `https://www.coursera.org/account/accomplishments/certificate/ABCDEFGHIJKL`
-- `https://www.coursera.org/account/accomplishments/specialization/certificate/ABCDEFGHIJKL`
-
-Feel free to open an issue or pull request if you want to support other certificates.
-
-## Endpoints
-
-- `cert.deta.dev`
-- `certi.jacoblin.cool` (alias of `cert.deta.dev`)
-
-You can also host this service on your own domain.

@@ -1,8 +1,10 @@
 # Certi
 
-An URL shortener for Certificates.
+An configurable URL shortener for Certificates (and other things).
 
-The URL of the Coursera certificate is too long, and putting it on the resume is breaking the layout, so I created this URL shortener.
+It has a core library and multiple distributions: CLI Tool, Cloudflare Workers, and Deta Macro.
+
+> The URL of the Coursera certificate is too long, and putting it on the resume is breaking the layout, so I created this URL shortener.
 
 <p align="center">
     <a href="#usage"> Usage </a> |
@@ -88,7 +90,10 @@ Feel free to open an issue or pull request if you want to support other certific
 
 ## Endpoints
 
-- `cert.deta.dev`
-- `certi.jacoblin.cool` (alias of `cert.deta.dev`)
+Those are public endpoints:
+
+- `cert.deta.dev` (Hosted on [Deta](https://deta.sh/))
+- `certi.jacoblin.cool` (Alias of `cert.deta.dev`)
+- `certi.jacob.workers.dev` (Hosted on [Cloudflare Workers](https://workers.cloudflare.com/))
 
 You can also host this service on your own domain.
