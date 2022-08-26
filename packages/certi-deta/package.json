@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "certi-deta",
-    "version": "0.1.0",
+    "version": "0.1.6",
     "description": "An URL shortener for certificates.",
     "scripts": {
         "prepare": "pnpm build",
