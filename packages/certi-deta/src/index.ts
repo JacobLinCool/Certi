@@ -2,7 +2,7 @@ import { Certi, ERROR } from "certi";
 import express from "express";
 import store from "./store";
 
-const app = express();
+const app: express.Express = express();
 const certi = new Certi({ base: "https://certi.jacoblin.cool/", store });
 
 app.get("/", (req, res) => {
